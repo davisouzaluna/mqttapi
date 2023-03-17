@@ -26,7 +26,7 @@ const char* topico = "energia_braba";//tópico
 
 //===========================*instancias das classes*==========================================================//
 EnergyMonitor monitor;
-WiFiClienr espClient;//alterei a variável "WifiClienr" para "WifiClient"
+WiFiClient espClient;//alterei a variável "WifiClienr" para "WifiClient"
 PubSubClient client(espClient);
 
 //===========================*variáveis e outras funções*======================================================//
