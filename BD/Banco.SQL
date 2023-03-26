@@ -26,10 +26,9 @@ create table log_err(
     foreign key(log_iot_fk) references iot_dispositivo(iot_id)
 );
 create table messages(
-    messages_id not null auto_increment,
+    messages_id int not null auto_increment,
     messages_payload varchar(80),
-    messages_topico_fk varchar,
+    messages_topico_fk int not null,/*fk*/
     primary key (messages_id),
     foreign key(messages_topico_fk) references iot_dispositivo(iot_id)/*Cada dispositivo vai ter um tópico(por isso que eu apontei para o id do dispositivo)*/
 );
-
