@@ -30,6 +30,6 @@ create table messages(
     messages_payload varchar(80),
     messages_topico_fk varchar,
     primary key (messages_id),
-    foreign key(messages_topico_fk) references iot_dispositivo(iot_id)
+    foreign key(messages_topico_fk) references iot_dispositivo(iot_id)/*Cada dispositivo vai ter um tópico(por isso que eu apontei para o id do dispositivo)*/
 );
 
