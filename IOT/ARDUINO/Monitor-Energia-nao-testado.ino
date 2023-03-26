@@ -16,7 +16,7 @@ const char* ssid = "12345678";//nome da rede
 const char* password = "12345678";//senha da rede
 
 //============================*Mosquitto*======================================================================//
-const char* mqttServer = "mqtt3.thingspeak.com ";//broker--Recomenda-se alterar para test.mosquitto.org
+const char* mqttServer = "test.mosquitto.org";//broker--Recomenda-se alterar para test.mosquitto.org
 const int mqttPort = 1883;
 const char* mqttUser = "";
 const char* mqttPassword = "";
