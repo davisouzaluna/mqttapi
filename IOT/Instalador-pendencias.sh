@@ -30,6 +30,14 @@ then
     sudo apt-get update
     sudo apt-get install mosquitto-clients -y
 fi
+#Verifica se o socket io está instalado
+
+if [ -d "./node_modules/socket.io" ]
+then
+  echo "O pacote Socket.io está instalado."
+else
+  npm install socket.io
+fi
 
 # Inicia o broker Mosquitto
 sudo service mosquitto start
