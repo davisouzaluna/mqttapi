@@ -26,6 +26,7 @@ class BDManipulator:
             self.connection.close()
 
     def insert_data(self, mensagem, topico, qos, data_hora_medicao):
+        data_hora_medicao
         insert_query = "INSERT INTO Dispositivo(mensagem, topico, qos, data_hora_medicao) VALUES(%s, %s, %s, %s)"
         self.cursor.execute(insert_query, (mensagem, topico, qos, data_hora_medicao))
         self.connection.commit()
