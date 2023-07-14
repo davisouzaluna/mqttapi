@@ -31,9 +31,9 @@ void setup() {
 void loop() {
   int value = analogRead(A0);//Lê o pino A0, caso queira fazer alguma alteração no projeto, é só mudar o pino(pino de leitura dos dados)
   char message[1000];
-  sprintf(message, "%d", value);
-  client.publish(topic, message);//publica a mensagem
-  delay(1000);//intervalo entre as mensagens
+  sprintf(message, "%d", value);//"transforma" o dado em varchar
+  client.publish(topic, message);//publica a mensagem em bytes(serializando)
+  delay(1000);//intervalo entre as mensagens(fica um tempo inativo)
 }
 
 

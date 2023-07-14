@@ -21,12 +21,11 @@ BIND = ""
 HOST = "localhost"
 USER = "root"
 PASSWORD = "root"
-DATABASE = "Thingsafe"
+DATABASE = "teste"
 PORT_DATABASE = 3306
 
 # Instanciar objetos
 bd_manipulator = BDManipulator(HOST, USER, PASSWORD, DATABASE, PORT_DATABASE)
-json_manipulator = JSONManipulator()
 mqtt_communicator = MQTTCommunicator(BROKER, PORT, KEEPALIVE, BIND)
 
 # Conectar ao banco de dados
@@ -60,3 +59,7 @@ while True:
 
     # Aguardar 1 segundo antes de executar novamente
     time.sleep(1)
+#A criação do banco(tabelas e etc) é feita por fora, então caso seja feita a execução do código com um banco não criado
+# irá ocorrer um erro. Posteriormente será criado a automação da criação da tabela.
+
+#A query é: "INSERT INTO Dispositivo(mensagem, topico, qos, data_hora_medicao) VALUES(%s, %s, %s, %s)"
