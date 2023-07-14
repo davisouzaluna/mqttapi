@@ -21,7 +21,7 @@ BIND = ""
 HOST = "localhost"
 USER = "root"
 PASSWORD = "root"
-DATABASE = "Thingsafe"
+DATABASE = "ReLUZ_API"
 PORT_DATABASE = 3306
 
 # Instanciar objetos

@@ -19,9 +19,15 @@ BROKER = "test.mosquitto.org"
 PORT = 1883
 KEEPALIVE = 60
 BIND = ""
+#Variáveis de controle do banco(Mysql)
+HOST = "localhost"
+USER = "root"
+PASSWORD = "root"
+DATABASE = "ReLUZ_API"
+PORT_DATABASE = 3306
 
 # Instanciar objetos
-bd_manipulator = BDManipulator("localhost", "root", "root", "thingsafe", 3306)
+bd_manipulator = BDManipulator(HOST, USER, PASSWORD, DATABASE, PORT_DATABASE)
 json_manipulator = JSONManipulator()
 mqtt_communicator = MQTTCommunicator(BROKER, PORT, KEEPALIVE, BIND)
 
