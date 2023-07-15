@@ -48,7 +48,7 @@ class WebSocketServer:
             }
             websocket.send(json.dumps(message))
             
-    def connect_to_websocket(self,WEBSOCKET_SERVER):
+    def connect_to_websocket(self):
         global websocket
         websocket_server = f"ws://{self.host}:{self.port}/"
         websocket = websocket.WebSocketApp(websocket_server, on_message=self.on_message)
