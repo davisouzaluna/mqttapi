@@ -1,8 +1,5 @@
 import asyncio
-import json
-import threading
 import websockets
-
 
 class WebSocketServer:
     def __init__(self, host, port):
@@ -39,31 +36,4 @@ class WebSocketServer:
     def stop_server(self):
         if self.server:
             self.server.close()
-            
-    def send_message_to_websocket(topic, payload):
-        if websocket and websocket.sock and websocket.sock.connected:
-            message = {
-                'topic': topic,
-                'payload': payload
-            }
-            websocket.send(json.dumps(message))
-            
-    def connect_to_websocket(self):
-        global websocket
-        websocket_server = f"ws://{self.host}:{self.port}/"
-        websocket = websocket.WebSocketApp(websocket_server, on_message=self.on_message)
-        websocket.run_forever()
-        
-    def on_message(ws, message):
-        data = json.loads(message)
-        topic = data['topic']
-        payload = data['payload']
-
-    def start_websocket_thread(self):
-        websocket_thread = threading.Thread(target=self.connect_to_websocket)
-        websocket_thread.daemon = True
-        websocket_thread.start()
-
-
-
             

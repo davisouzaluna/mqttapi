@@ -20,7 +20,8 @@ setup(
     'pymysql',
     'paho-mqtt',
     'asyncio',
-    'websocket-client'
+    'websockets',
+    'websocket'
     ],
     keywords=[
         "mqtt api",
