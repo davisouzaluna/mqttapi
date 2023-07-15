@@ -1,3 +1,4 @@
+import datetime
 from mqttapi import BDManipulator
 from mqttapi import MQTTCommunicator
 import signal
@@ -29,5 +30,6 @@ while True:
         mensagem = str(msg.payload)
         topico = str(msg.topic)
         qos = msg.qos
+        data_hora_medicao= datetime.datetime.now(datetime.timezone.utc)
         bd_manipulator.insert_data(mensagem, topico, qos, data_hora_medicao)
 
