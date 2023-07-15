@@ -15,7 +15,6 @@ mqtt_communicator.subscribe_to_topics(topic_qos_tuples)
 
 def signal_handler(signal, frame):
     print("Programa encerrado.")
-    bd_manipulator.disconnect()
     mqtt_communicator.disconnect()
     sys.exit(0)
 signal.signal(signal.SIGINT, signal_handler)

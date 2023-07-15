@@ -3,7 +3,7 @@ import os
 
 def read_version():
     here = os.path.abspath(os.path.dirname(__file__))
-    version_file = os.path.join(here, 'mqttapi', '__init__.py')
+    version_file = os.path.join(here, 'mqttapi', '__version__.py')
     namespace = {}
     with open(version_file, 'r') as f:
         exec(f.read(), namespace)

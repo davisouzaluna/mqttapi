@@ -3,4 +3,3 @@ from .bd_manipulator import BDManipulator
 from .json_manipulator import JSONManipulator
 from .websocket_server import WebSocketServer
 
-__version__ = '0.1.1'
