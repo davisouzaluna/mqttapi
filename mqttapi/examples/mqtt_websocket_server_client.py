@@ -8,6 +8,17 @@ from mqttapi import MQTTCommunicator,WebSocketServer,WebSocketClient
 HOST_WS = 'localhost'
 PORT_WS = 8769
 
+MQTT_BROKER = 'localhost'
+MQTT_PORT = 1883
+MQTT_KEEPALIVE = 60
+MQTT_BIND_ADDRESS = ''
+
+topic_qos_tuples = [
+    ('topic1', 0),
+    ('topic2', 1),
+    ('topic3', 2)
+    ]
+
 def run_websocket_server():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
@@ -44,14 +55,9 @@ def main():
 
         signal.signal(signal.SIGINT, signal_handler)
 
-        mqtt_communicator = MQTTCommunicator(host='broker.hivemq.com', port=1883, keepalive=60, bind_address='')
+        mqtt_communicator = MQTTCommunicator(host=MQTT_BROKER, port=MQTT_PORT, keepalive=MQTT_KEEPALIVE, bind_address=MQTT_KEEPALIVE)
         mqtt_communicator.connect()
 
-        topic_qos_tuples = [
-            ('dataSets', 0),
-            ('topic2', 1),
-            ('topic3', 2)
-        ]
         mqtt_communicator.subscribe_to_topics(topic_qos_tuples)
 
         def on_messages(client, userdata, msg):

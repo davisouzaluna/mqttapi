@@ -4,12 +4,12 @@ import sys
 
 
 
-mqtt_communicator = MQTTCommunicator(host='broker.hivemq.com', port=1883, keepalive=60, bind_address='')
+mqtt_communicator = MQTTCommunicator(host='localhost', port=1883, keepalive=60, bind_address='')
 
 mqtt_communicator.connect()
 
 topic_qos_tuples = [
-    ('dataSets', 0),
+    ('topic1', 0),
     ('topic2', 1),
     ('topic3', 2)
 ]

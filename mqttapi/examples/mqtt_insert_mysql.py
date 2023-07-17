@@ -5,7 +5,7 @@ import sys
 
 #altere esses parametros:
 mqtt_communicator = MQTTCommunicator(host='localhost', port=1883, keepalive=60, bind_address='')
-bd_manipulator = MySQLManipulator(host='localhost', user='root', password='root', database='sensor_data',port=3306)
+bd_manipulator = MySQLManipulator(host='localhost', user='your_username', password='your_password', database='your_database',port=3306)
 
 mqtt_communicator.connect()
 bd_manipulator.connect()
