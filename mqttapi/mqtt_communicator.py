@@ -3,7 +3,7 @@ import paho.mqtt.client as mqtt
 import datetime
 
 class MQTTCommunicator:
-    def __init__(self, host, port, keepalive, bind_address):
+    def __init__(self, host='localhost', port=1883, keepalive=60, bind_address=''):
         self.host = host
         self.port = port
         self.keepalive = keepalive

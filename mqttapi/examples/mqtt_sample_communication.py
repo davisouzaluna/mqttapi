@@ -15,7 +15,7 @@ topic_qos_tuples = [
 ]
 mqtt_communicator.subscribe_to_topics(topic_qos_tuples)
 
-
+#Callback 
 def on_messages(client, userdata, msg):
     topic = msg.topic
     payload = msg.payload.decode("utf-8")

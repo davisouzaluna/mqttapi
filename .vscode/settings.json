@@ -1,5 +1,15 @@
 {
     "cSpell.words": [
+        "Dispositivo",
+        "keepalive",
+        "medicao",
+        "mensagem",
+        "MQTT",
+        "mqttapi",
+        "paho",
+        "pymysql",
+        "tabela",
+        "topico",
         "websockets"
     ]
 }

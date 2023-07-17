@@ -17,7 +17,7 @@ setup(
     author_email='Sdavi738@gmail.com',
     packages=['mqttapi'],
     install_requires=[
-    'pymysql',
+    'mysql-connector-python',
     'paho-mqtt',
     'asyncio',
     'websockets',
