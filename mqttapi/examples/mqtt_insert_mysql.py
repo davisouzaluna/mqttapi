@@ -1,6 +1,5 @@
 import datetime
-from mqttapi import BDManipulator
-from mqttapi import MQTTCommunicator
+from mqttapi import BDManipulator,MQTTCommunicator
 import signal
 import sys
 

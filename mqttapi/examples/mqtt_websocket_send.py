@@ -1,6 +1,5 @@
 import asyncio
-from mqttapi import MQTTCommunicator
-from mqttapi import WebSocketClient
+from mqttapi import MQTTCommunicator,WebSocketClient
 import signal
 import sys
 

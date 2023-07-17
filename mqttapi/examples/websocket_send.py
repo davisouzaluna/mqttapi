@@ -1,5 +1,5 @@
 import asyncio
-from websocket_client import WebSocketClient
+from mqttapi import WebSocketClient
 
 async def send_data():
     websocket_client = WebSocketClient(websocket_server="ws://localhost:8769/")
