@@ -1,3 +1,4 @@
+import asyncio
 import paho.mqtt.client as mqtt
 import datetime
 
@@ -14,7 +15,8 @@ class MQTTCommunicator:
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
         self.client.connect(self.host, self.port, self.keepalive, self.bind_address)
-        self.client.loop_start()
+        
+        
 
     def disconnect(self):
         self.client.disconnect()
@@ -39,3 +41,9 @@ class MQTTCommunicator:
         print("Payload: " + str(msg.payload))
         print("Hora: " + datetime.datetime.now(datetime.timezone.utc).strftime("%H:%M:%S"))
         print("=============================")
+
+    async def run(self):
+        while self.connected:
+            # Processar eventos MQTT
+            self.client.loop()
+            await asyncio.sleep(0.1)

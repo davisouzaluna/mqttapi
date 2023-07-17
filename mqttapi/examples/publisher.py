@@ -2,10 +2,10 @@ import paho.mqtt.client as mqtt
 import time
 import random
 
-BROKER="test.mosquitto.org"
+BROKER="broker.hivemq.com"
 PORT=1883
 KEEPALIVE=60
-TOPIC="dataSet"
+TOPIC="dataSets"
 time_sleep_pub=1
 
 #Publisher
@@ -15,7 +15,7 @@ client.loop_start()
 
 def publish_data(data):
     client.publish(TOPIC, data)
-
+    print("Mensagem publicada")
 try:
     while True:
         message=random.randint(0, 30)
