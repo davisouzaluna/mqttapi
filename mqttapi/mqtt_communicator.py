@@ -16,8 +16,10 @@ class MQTTCommunicator:
         self.client.on_message = self.on_message
         self.client.connect(self.host, self.port, self.keepalive, self.bind_address)
         
+    #deixa padrão o   
+    def connect_without_verification(self):
+        self.client.connect(self.host, self.port, self.keepalive, self.bind_address)
         
-
     def disconnect(self):
         self.client.disconnect()
         self.client.loop_stop()
@@ -42,5 +44,7 @@ class MQTTCommunicator:
         print("Hora: " + datetime.datetime.now(datetime.timezone.utc).strftime("%H:%M:%S"))
         print("=============================")
 
+    def loopstart(self):
+        self.client.loop_start()
     async def run(self):
-        self.client.loop_forever()
+        await self.client.loop_forever()

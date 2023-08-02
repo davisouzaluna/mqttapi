@@ -1,6 +1,7 @@
 import json
 import time
 import paho.mqtt.client as mqtt
+import mqtt_communicator as m
 from flask import Flask, Response
 
 app = Flask(__name__)
@@ -18,12 +19,21 @@ def on_message(client, userdata, message):
     payload = message.payload.decode('utf-8')
     mqtt_messages.append(payload)
 
+
 # Configurar cliente MQTT
 mqtt_client = mqtt.Client()
 mqtt_client.on_message = on_message
 mqtt_client.connect(MQTT_BROKER_HOST, MQTT_BROKER_PORT, keepalive=60)
 mqtt_client.subscribe(MQTT_TOPIC)
 mqtt_client.loop_start()
+
+@app.after_request
+def add_cors_headers(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    return response
+
 
 def event_generator():
     while True:
@@ -33,7 +43,7 @@ def event_generator():
         else:
             pass
 
-@app.route('/events')
+@app.route('/')
 def events():
     return Response(event_generator(), content_type='text/event-stream')
 
