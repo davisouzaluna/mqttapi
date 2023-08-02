@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recebendo Mensagens MQTT</title>
+    <script>
+        const eventSource = new EventSource('http://127.0.0.1:5000/');  // Conecta-se à rota Flask
+
+        eventSource.onmessage = function(event) {
+            const message = JSON.parse(event.data);  // Converte o JSON recebido em um objeto JavaScript
+
+            // Atualiza ou adiciona a mensagem à lista de mensagens
+            const messageList = document.getElementById('message-list');
+            const messageItem = document.createElement('li');
+            messageItem.textContent = JSON.stringify(message);
+            messageList.appendChild(messageItem);
+        };
+    </script>
+</head>
+<body>
+    <h1>Mensagens MQTT Recebidas</h1>
+    <ul id="message-list"></ul>
+</body>
+</html>
