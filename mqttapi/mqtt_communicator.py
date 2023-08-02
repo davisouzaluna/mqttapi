@@ -43,7 +43,4 @@ class MQTTCommunicator:
         print("=============================")
 
     async def run(self):
-        while self.connected:
-            # Processar eventos MQTT
-            self.client.loop()
-            await asyncio.sleep(0.1)
+        self.client.loop_forever()

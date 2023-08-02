@@ -31,7 +31,7 @@ def event_generator():
             data = mqtt_messages.pop(0)
             yield f"data: {data}\n\n"
         else:
-            time.sleep(1)
+            pass
 
 @app.route('/events')
 def events():
