@@ -11,7 +11,7 @@ mqtt_communicator.connect()
 topic_qos_tuples = [
     ('topic1', 0),
     ('topic2', 1),
-    ('topic3', 2)
+    ('topic3', 2),
 ]
 mqtt_communicator.subscribe_to_topics(topic_qos_tuples)
 
