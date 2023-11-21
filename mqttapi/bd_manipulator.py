@@ -2,19 +2,45 @@ import mysql.connector
 import datetime
 
 class MySQLManipulator:
-    def __init__(self, host='localhost', user='root', password='', database=None, port=3306):
+    def __init__(self, host='localhost', user='root', password='', database=None, port=3306, lectures="leituras"):
         self.host = host
         self.user = user
         self.password = password
         self.database = database
         self.port = port
+        self.lectures = lectures
         self.connection = None
         self.cursor = None
 
-    def create_table(self, table=None):
+    def create_table(self, table=None, lectures=False):
         if table is None:
             table = 'Dispositivo'
-
+        
+        
+        ###############To create the table of lectures################
+        if lectures is True:   
+            create_table_query_lectures = f"""
+                CREATE TABLE IF NOT EXISTS {self.lectures} (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    sensor_id VARCHAR(255),
+                    current_value FLOAT,
+                    created_at DATETIME,
+                    FOREIGN KEY (sensor_id) REFERENCES {table}(id)
+                        )
+                
+            """
+            
+            create_table_query_without_lectures = f"""
+                CREATE TABLE IF NOT EXISTS {table} (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    topic VARCHAR(255),
+                    qos INT,
+                    )
+            
+            """
+            self.cursor.execute(create_table_query_lectures)
+            self.cursor.execute(create_table_query_without_lectures)
+        ##############################################################
         create_table_query = f"""
             CREATE TABLE IF NOT EXISTS {table} (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -46,12 +72,37 @@ class MySQLManipulator:
             self.cursor.close()
             self.connection.close()
 
+    
+    def insert_data_with_table_lectures(self, sensor_topic, current_value, data_hora_medicao=None, tabela=None):
+        tabela = tabela or 'Dispositivo'
+        
+        self.create_table(tabela, lectures=True)
+        if data_hora_medicao is None:
+            data_hora_medicao = datetime.datetime.now(datetime.timezone.utc)
+            
+        try:
+            insert_query = f"INSERT INTO {tabela}(topic,qos) VALUES(%s, %s)"
+            insert_query_lectures = f"INSERT INTO {self.lectures}(sensor_id, current_value, created_at) VALUES(%s, %s, %s)"
+            self.cursor.execute(insert_query, (sensor_topic, self.qos))
+            self.cursor.execute(insert_query_lectures, (sensor_topic, current_value, data_hora_medicao))
+            self.connection.commit()
+        except mysql.connector.Error as error:
+            print("Failed to insert into MySQL table {}".format(error))
+            self.connection.rollback()
+        
+        
     def insert_data(self, mensagem, topico, qos, data_hora_medicao=None, tabela=None):
         tabela = tabela or 'Dispositivo'  # Define 'Dispositivo' as the default table if tabela is None
 
         self.create_table(tabela)
         if data_hora_medicao is None:
             data_hora_medicao = datetime.datetime.now(datetime.timezone.utc)
-        insert_query = f"INSERT INTO {tabela}(message, topic, qos, created_at) VALUES(%s, %s, %s, %s)"
-        self.cursor.execute(insert_query, (mensagem, topico, qos, data_hora_medicao))
-        self.connection.commit()
+        
+        try:
+            insert_query = f"INSERT INTO {tabela}(message, topic, qos, created_at) VALUES(%s, %s, %s, %s)"
+            self.cursor.execute(insert_query, (mensagem, topico, qos, data_hora_medicao))
+            self.connection.commit()
+            
+        except mysql.connector.Error as error:
+            print("Failed to insert into MySQL table {}".format(error))
+            self.connection.rollback()
