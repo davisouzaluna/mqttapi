@@ -1,6 +1,7 @@
+'''
 import json
 import os
-import mqtt_communicator
+from mqtt_communicator import MQTTCommunicator
 import datetime
 
 class JSONManipulator:
@@ -35,3 +36,5 @@ class JSONManipulator:
         
         json_string = json.dumps(json_data)
         return json_string
+        
+        '''
