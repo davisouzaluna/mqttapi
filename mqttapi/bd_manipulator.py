@@ -35,7 +35,8 @@ class MySQLManipulator:
                 CREATE TABLE IF NOT EXISTS {table} (
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     topic VARCHAR(255) UNIQUE,
-                    qos INT
+                    qos INT,
+                    created_at DATETIME
                     )
             
             """
@@ -66,6 +67,7 @@ class MySQLManipulator:
         if self.database is not None:
             self.cursor.execute(f"CREATE DATABASE IF NOT EXISTS {self.database}")
             self.connection.database = self.database
+            self.cursor = self.connection.cursor()
 
         
 
@@ -84,19 +86,20 @@ class MySQLManipulator:
         self.cursor.execute(check_device_query, (sensor_topic,))
         result = self.cursor.fetchone()
 
-        if not result:
-        # O dispositivo não existe, então precisamos inseri-lo antes de adicionar à tabela de leituras
-            insert_device_query = f"INSERT INTO {tabela}(topic, qos) VALUES(%s, %s)"
-            self.cursor.execute(insert_device_query, (sensor_topic, qos))
-            self.connection.commit()
-
-    # Agora podemos inserir os dados na tabela de leituras
+        
         if data_hora_medicao is None:
             data_hora_medicao = datetime.datetime.now(datetime.timezone.utc)
 
+        if not result:
+        # O dispositivo não existe, então precisamos inseri-lo antes de adicionar à tabela de leituras
+            insert_device_query = f"INSERT INTO {tabela}(topic, qos, created_at) VALUES(%s, %s, %s)"
+            self.cursor.execute(insert_device_query, (sensor_topic, qos, data_hora_medicao))
+            self.connection.commit()
+
+    # Agora podemos inserir os dados na tabela de leituras
         try:
             insert_query_lectures = f"INSERT INTO {self.lectures}(sensor_id, current_value, created_at) VALUES(%s, %s, %s)"
-            self.cursor.execute(insert_query_lectures, (sensor_topic, current_value, data_hora_medicao))
+            self.cursor.execute(insert_query_lectures, (str(sensor_topic), current_value, data_hora_medicao))
             self.connection.commit()
         except mysql.connector.Error as error:
             print("Failed to insert into MySQL table {}".format(error))
