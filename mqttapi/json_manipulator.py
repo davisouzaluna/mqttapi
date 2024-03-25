@@ -1,16 +1,15 @@
-'''
 import json
 import os
-from mqtt_communicator import MQTTCommunicator
 import datetime
 
 class JSONManipulator:
     def __init__(self):
-        pass
+        self.cache = {}
 
     def create_json_file(self, data, filename):
-        with open(filename, 'w') as file:
-            json.dump(data, file)
+        if not os.path.exists(filename):
+            with open(filename, 'w') as file:
+                json.dump(data, file)
 
     def update_json_file(self, data, filename):
         if os.path.exists(filename):
@@ -22,19 +21,31 @@ class JSONManipulator:
         with open(filename, 'w') as file:
             json.dump(existing_data, file)
 
-    #Coloque essa função dentro do callback
-    def createMQTTjson(self,mqtt_message):
+    # Função para criar o JSON a partir da mensagem MQTT
+    def createMQTTjson(self, mqtt_message, filename):
         topic = mqtt_message.topic
         payload = mqtt_message.payload.decode("utf-8")
         timestamp = datetime.datetime.now(datetime.timezone.utc)
-        
+
         json_data = {
-        "topic": topic,
-        "payload": payload,
-        "timestamp": timestamp
+            "topic": str(topic),
+            "payload": str(payload),
+            "timestamp": str(timestamp)
         }
-        
-        json_string = json.dumps(json_data)
-        return json_string
-        
-        '''
+
+        # Verificar se o arquivo já está sendo usado por outro programa
+        if filename in self.cache:
+            # Se o tamanho do cache ultrapassar 4 MB, limpar o cache
+            if len(json.dumps(self.cache[filename])) > 4 * 1024 * 1024:# Esse tamanho eu escolhi arbitrariamente
+                self.cache.pop(filename)
+            else:
+                # Adicionar dados ao cache
+                if filename not in self.cache:
+                    self.cache[filename] = []
+                self.cache[filename].append(json_data)
+                return
+
+        # Se o arquivo não está sendo usado por outro programa ou o cache foi limpo, escrever diretamente no arquivo
+        with open(filename, 'a') as file:
+            json.dump(json_data, file)
+            file.write('\n')

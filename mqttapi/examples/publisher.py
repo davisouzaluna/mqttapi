@@ -2,7 +2,7 @@ import paho.mqtt.client as mqtt
 import time
 import random
 
-BROKER="broker.hivemq.com"
+BROKER="localhost"
 PORT=1883
 KEEPALIVE=60
 TOPIC="dataSets"

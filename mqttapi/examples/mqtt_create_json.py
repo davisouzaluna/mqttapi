@@ -1,10 +1,12 @@
 from mqttapi import MQTTCommunicator
+from json_manipulator import JSONManipulator    
 import signal
 import sys
 
 
-
+#Por enquanto, nesse exemplo, o código do JSONManipulator ainda não foi adicionadoao MQTTapi
 mqtt_communicator = MQTTCommunicator(host='localhost', port=1883, keepalive=60, bind_address='')
+json_manipulator = JSONManipulator()
 
 mqtt_communicator.connect()
 
@@ -20,6 +22,8 @@ def on_messages(client, userdata, msg):
     topic = msg.topic
     payload = msg.payload.decode("utf-8")
     print(f"Received MQTT message. Topic: {topic}, Payload: {payload}")
+    json_manipulator.createMQTTjson(msg,"teste")
+    
     # Chame o método on_message do mqtt_communicator
     
 
