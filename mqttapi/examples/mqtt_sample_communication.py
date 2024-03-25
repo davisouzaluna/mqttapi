@@ -23,17 +23,16 @@ def on_messages(client, userdata, msg):
     # Chame o método on_message do mqtt_communicator
     
 
-
+#Quando for clicar em ctrl+c, o programa irá chamar a função signal_handler
 def signal_handler(signal, frame):
     print("\nPrograma encerrado.\n")
     mqtt_communicator.disconnect()
     sys.exit(0)
 
-
+#chamada da função acima
 signal.signal(signal.SIGINT, signal_handler)
 
-
-
+#Loop para ficar escutando mensagens
 while True:
     mqtt_communicator.client.loop_start()
     mqtt_communicator.client.on_message = on_messages

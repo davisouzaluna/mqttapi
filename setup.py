@@ -30,6 +30,8 @@ setup(
         "messaging",
         "simplified mqtt",
         "paho-mqtt api",
+        "MQTT",
+        "mqtt",
         ],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
@@ -40,5 +42,5 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
     ],
-    url='https://github.com/davifurao/mqttapi',
+    url='https://github.com/davisouzaluna/mqttapi',
 )
