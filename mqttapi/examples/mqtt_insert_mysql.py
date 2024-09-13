@@ -1,5 +1,5 @@
 import datetime
-from mqttapi import MQTTCommunicator,MySQLManipulator
+from mqttapi import MQTTCommunicator, MySQLManipulator
 import signal
 import sys
 
@@ -26,7 +26,7 @@ def signal_handler(signal, frame):
 signal.signal(signal.SIGINT, signal_handler)
 
 def handle_message(client, userdata, msg):
-        mensagem = msg.payload.decode()#É feito isso pois a mensabem vem em bytes, entao ao invés de uma mensagem de: b'30 nós teremos: 30
+        mensagem = msg.payload.decode()#É feito isso pois a mensagem vem em bytes, entao ao invés de uma mensagem de: b'30 nós teremos: 30
         topico = str(msg.topic)
         qos = msg.qos
         data_hora_medicao= datetime.datetime.now(datetime.timezone.utc)

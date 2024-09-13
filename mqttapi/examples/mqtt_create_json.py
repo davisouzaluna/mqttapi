@@ -1,5 +1,5 @@
 from mqttapi import MQTTCommunicator
-from json_manipulator import JSONManipulator    
+from mqttapi import JSONManipulator    
 import signal
 import sys
 
